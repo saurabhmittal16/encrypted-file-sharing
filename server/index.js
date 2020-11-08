@@ -16,6 +16,8 @@ const mongo_url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:$
 // use CORS
 app.register(require('fastify-cors'));
 
+const routes = require("./routes")
+
 // welcome route for API
 app.get("/", async () => {
 	return {
@@ -23,6 +25,7 @@ app.get("/", async () => {
 	};
 });
 
+routes.forEach(route => app.route(route));
 
 // connect to mongodb and serve fastify app
 mongoose

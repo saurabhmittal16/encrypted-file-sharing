@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const nanoid = require('nanoid')
+const utils = require('./utils')
 
 const BASE = "../uploads/"
 
@@ -35,6 +36,18 @@ exports.createNew = async (req, res) => {
 
     // Pass this path to the encryption service
     // Receive final saved path in response
+
+    const response = await utils.encryptFile(finalPath, password)
+    if (response.status == 200) {
+        console.log("Successful encryption")
+    } else {
+        console.log("Encryption failed " + response.data)
+        res.code(500).send({
+            "error": "Encryption failed"
+        })
+    }
+
+    const encryptedPath = response.data
     // Create entry in DB for nanoid, path and password's hash
     
     res.send({

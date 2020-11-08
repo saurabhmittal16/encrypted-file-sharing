@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/saurabhmittal16/encrypted-file-sharing#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "fastify": "^3.7.0",

@@ -13,6 +13,25 @@ const generateFilename = () => {
 }
 
 exports.getFile = async (req, res) => {
+    const uniquePath = req.query.file
+    const password = req.query.password
+
+    try {
+        const foundEntry = await Entry.findOne({ path: uniquePath });
+
+        if (foundEntry.comparePassword(password)) {
+            console.log("Correct password");
+        } else {
+            res.code(401).send({
+                "error": "Wrong password"
+            })
+        }
+    } catch(err) {
+        res.code(404).send({
+            "error": "No such file found"
+        });
+    }
+
     return {
         "message": "Here is your file"
     }
@@ -40,6 +59,9 @@ exports.createNew = async (req, res) => {
     // Receive final saved path in response
 
     const response = await utils.encryptFile(finalPath, password)
+    
+    // To-Do: Delete original file
+
     if (response.status == 200) {
         console.log("Successful encryption")
     } else {

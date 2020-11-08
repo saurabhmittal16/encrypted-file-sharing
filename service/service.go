@@ -67,7 +67,7 @@ func handleDecryption(w http.ResponseWriter, r *http.Request) {
 	encrypted_path := body.Path
 	decrypted_path := RandStringBytes(10) + filepath.Ext(body.Path[:len(body.Path) - 4])
 
-	err = filecryptor.Decrypt(body.Password, encrypted_path, decrypted_path)
+	err = filecryptor.Decrypt(body.Password, encrypted_path, "../tmp/" + decrypted_path)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

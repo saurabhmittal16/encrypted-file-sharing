@@ -1,5 +1,6 @@
 const fastify = require("fastify");
 const mongoose = require("mongoose");
+const path = require('path');
 
 // initialise fastify app
 const app = fastify({
@@ -17,7 +18,11 @@ const mongo_url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:$
 app.register(require('fastify-cors'));
 
 // allow multipart
-app.register(require('fastify-multipart'), { attachFieldsToBody: true })
+app.register(require('fastify-multipart'), { attachFieldsToBody: true });
+
+app.register(require('fastify-static'), {
+	root: path.join(__dirname, "../tmp/")
+});
 
 const routes = require("./routes")
 

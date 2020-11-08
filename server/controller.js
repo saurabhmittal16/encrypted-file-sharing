@@ -27,9 +27,7 @@ exports.getFile = async (req, res) => {
 
             if (response.status == 200) {
                 console.log("Successful decryption")
-                return {
-                    "message": response.data
-                }
+                res.sendFile(response.data)
             } else {
                 console.log("Decryption failed " + response.data)
                 res.code(500).send({
@@ -47,10 +45,6 @@ exports.getFile = async (req, res) => {
         res.code(404).send({
             "error": "No such file found"
         });
-    }
-
-    return {
-        "message": "Here is your file"
     }
 }
 

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const entrySchema = new mongoose.Schema({
 	path: String,
+	encryptedPath: String,
     password: String
 }, {
 	versionKey: false

@@ -4,6 +4,7 @@ const nanoid = require('nanoid')
 const utils = require('./utils')
 
 const Entry = require('./entry')
+const { type } = require('os')
 
 const BASE = "../uploads/"
 
@@ -20,13 +21,29 @@ exports.getFile = async (req, res) => {
         const foundEntry = await Entry.findOne({ path: uniquePath });
 
         if (foundEntry.comparePassword(password)) {
-            console.log("Correct password");
+            const response = await utils.decryptFile(foundEntry.encryptedPath, password)
+    
+            // To-Do: Delete this temp file after serving
+
+            if (response.status == 200) {
+                console.log("Successful decryption")
+                return {
+                    "message": response.data
+                }
+            } else {
+                console.log("Decryption failed " + response.data)
+                res.code(500).send({
+                    "error": "Decryption failed"
+                })
+            }
+
         } else {
             res.code(401).send({
                 "error": "Wrong password"
             })
         }
     } catch(err) {
+        console.log(err)
         res.code(404).send({
             "error": "No such file found"
         });
@@ -71,11 +88,14 @@ exports.createNew = async (req, res) => {
         })
     }
 
+    const encryptedPath = response.data
+    
     // Create entry in DB for nanoid, path and password's hash
     try {
         await Entry.create({
             path: uniquePath,
-            password: password
+            password: password,
+            encryptedPath: encryptedPath,
         });
 
         return {

@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net/http"
 	"encoding/json"
+	"path/filepath"
 
 	"github.com/saurabhmittal16/filecryptor"
 )
@@ -63,8 +64,8 @@ func handleDecryption(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	encrypted_path := body.Path + ".enc"
-	decrypted_path := RandStringBytes(10) + body.Path[len(body.Path) - 4:]
+	encrypted_path := body.Path
+	decrypted_path := RandStringBytes(10) + filepath.Ext(body.Path[:len(body.Path) - 4])
 
 	err = filecryptor.Decrypt(body.Password, encrypted_path, decrypted_path)
 

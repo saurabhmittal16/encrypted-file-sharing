@@ -1,0 +1,31 @@
+{
+  "name": "encrypted-file-sharing",
+  "version": "0.0.1",
+  "description": "Backend for the app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saurabhmittal16/encrypted-file-sharing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saurabhmittal16/encrypted-file-sharing/issues"
+  },
+  "homepage": "https://github.com/saurabhmittal16/encrypted-file-sharing#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "fastify": "^3.7.0",
+    "fastify-cors": "^4.1.0",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

@@ -4,7 +4,6 @@ const nanoid = require('nanoid')
 const utils = require('./utils')
 
 const Entry = require('./entry')
-const { type } = require('os')
 
 const BASE = "../uploads/"
 
@@ -82,6 +81,7 @@ exports.createNew = async (req, res) => {
         })
     }
 
+    fs.unlinkSync(finalPath)
     const encryptedPath = response.data
     
     // Create entry in DB for nanoid, path and password's hash

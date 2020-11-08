@@ -16,6 +16,9 @@ const mongo_url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}:$
 // use CORS
 app.register(require('fastify-cors'));
 
+// allow multipart
+app.register(require('fastify-multipart'), { attachFieldsToBody: true })
+
 const routes = require("./routes")
 
 // welcome route for API

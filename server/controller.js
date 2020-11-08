@@ -22,8 +22,6 @@ exports.getFile = async (req, res) => {
         if (foundEntry.comparePassword(password)) {
             const response = await utils.decryptFile(foundEntry.encryptedPath, password)
     
-            // To-Do: Delete this temp file after serving
-
             if (response.status == 200) {
                 console.log("Successful decryption")
                 res.sendFile(response.data)
@@ -70,8 +68,6 @@ exports.createNew = async (req, res) => {
 
     const response = await utils.encryptFile(finalPath, password)
     
-    // To-Do: Delete original file
-
     if (response.status == 200) {
         console.log("Successful encryption")
     } else {

@@ -3,6 +3,8 @@ const path = require('path')
 const nanoid = require('nanoid')
 const utils = require('./utils')
 
+const Entry = require('./entry')
+
 const BASE = "../uploads/"
 
 const generateFilename = () => {
@@ -47,10 +49,20 @@ exports.createNew = async (req, res) => {
         })
     }
 
-    const encryptedPath = response.data
     // Create entry in DB for nanoid, path and password's hash
-    
-    res.send({
-        "message" : "Saved your file"
-    });
+    try {
+        await Entry.create({
+            path: uniquePath,
+            password: password
+        });
+
+        return {
+            "message": "File upload successful",
+            "path": uniquePath
+        }
+    } catch(err) {
+        res.code(500).send({
+            "error": "Entry creation failed"
+        });
+    }
 }

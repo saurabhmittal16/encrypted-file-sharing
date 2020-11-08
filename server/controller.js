@@ -16,16 +16,16 @@ exports.getFile = async (req, res) => {
 }
 
 exports.createNew = async (req, res) => {    
-    const file = await req.body.file;
+    const file = req.body.file;
     
-    const buffer = file.toBuffer();
+    const buffer = await file.toBuffer();
     const extension = path.extname(file.filename);
     const password = await req.body.password.value;
 
     const uniquePath = generateFilename()
     const finalPath = BASE + uniquePath + extension;
 
-    fs.writeFileSync(finalPath, buffer, (err) => {
+    fs.writeFile(finalPath, buffer, (err) => {
         if (err) {
             res.code(500).send({
                 "error": "Invalid file sent"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Result, Input, Form, Button } from "antd";
+import { Result, Input, Form, Button, notification } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
 const FormItem = Form.Item;
 
@@ -13,22 +13,38 @@ const Home = () => {
 	const [password, setPassword] = useState("");
 	const [files, setFile] = useState();
 
-	const handleSubmit = () => {
-		console.log(password, files);
+	const handleSubmit = async () => {
 		const formData = new FormData();
 
 		formData.append("password", password);
 		formData.append("file", files[0]);
 
-		axios
-			.post("http://localhost:8080/api/file", formData, {
-				headers: {
-					"content-type":
-						"multipart/form-data; boundary=----WebKitFormBoundaryqTqJIxvkWFYqvP5s",
-				},
-			})
-			.then((res) => console.log(res.data))
-			.catch((err) => console.log(err));
+		try {
+			const response = await axios.post(
+				"http://localhost:8080/api/file",
+				formData,
+				{
+					headers: {
+						"content-type":
+							"multipart/form-data; boundary=----WebKitFormBoundaryqTqJIxvkWFYqvP5s",
+					},
+				}
+			);
+
+			notification.success({
+				message: "Upload successful",
+				description: (
+					<span>
+						The URL of uploaded file is {response.data.path}
+					</span>
+				),
+			});
+		} catch (err) {
+			notification.error({
+				message: "Upload failed",
+				description: <span>err.message</span>,
+			});
+		}
 	};
 
 	return (

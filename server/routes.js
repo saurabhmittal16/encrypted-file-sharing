@@ -11,6 +11,12 @@ const routes = [
         method: "GET",
         url: "/api/file",
         handler: controller.getFile
+    },
+
+    {
+        method: "GET",
+        url: "/api/check",
+        handler: controller.checkFile
     }
 ];
 

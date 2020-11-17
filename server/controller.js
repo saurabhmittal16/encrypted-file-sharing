@@ -12,6 +12,28 @@ const generateFilename = () => {
     return genid()
 }
 
+exports.checkFile = async (req, res) => {
+    const uniquePath = req.query.file
+    try {
+        const foundEntry = await Entry.findOne({ path: uniquePath });
+        console.log(foundEntry);
+
+        if (foundEntry) {
+            return res.send({
+                "success": true
+            });
+        } else {
+            res.send({
+                "success": false
+            });            
+        }
+    } catch(err) {
+        res.code(404).send({
+            "error": "No such file found"
+        });
+    }
+}
+
 exports.getFile = async (req, res) => {
     const uniquePath = req.query.file
     const password = req.query.password

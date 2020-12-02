@@ -4,5 +4,6 @@
 cd /home/saurabh/Data/Projects/encrypted-file-sharing/tmp
 while true
 do
-    find ./* -type f --mmin +1 -exec rm {} \;
+    # find ./* -type f --mmin +1 -exec rm {} \;
+    find -not -newermt '-15 seconds' -delete
 done

@@ -35,7 +35,18 @@ const Home = () => {
 				message: "Upload successful",
 				description: (
 					<span>
-						The URL of uploaded file is {response.data.path}
+						The URL of uploaded file is{" "}
+						{"http://localhost:3000/file/" + response.data.path}
+						<button
+							onClick={() => {
+								navigator.clipboard.writeText(
+									"http://localhost:3000/file/" +
+										response.data.path
+								);
+							}}
+						>
+							Copy
+						</button>
 					</span>
 				),
 			});

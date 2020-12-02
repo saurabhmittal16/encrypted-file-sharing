@@ -50,7 +50,7 @@ class File extends React.Component {
 			await axios.get(url);
 
 			notification.success({
-				message: "Download image",
+				message: "Download file",
 				description: (
 					<a href={url} download="file" target="__blank">
 						Link

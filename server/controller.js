@@ -16,7 +16,7 @@ exports.checkFile = async (req, res) => {
     const uniquePath = req.query.file
     try {
         const foundEntry = await Entry.findOne({ path: uniquePath });
-        console.log(foundEntry);
+        // console.log(foundEntry);
 
         if (foundEntry) {
             return res.send({
